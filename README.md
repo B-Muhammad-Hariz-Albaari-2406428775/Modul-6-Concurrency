@@ -35,3 +35,20 @@ Refactoring Kode
 Saya melakukan refactoring untuk mengurangi duplikasi kode pada blok if-else. Perbedaan antara kedua kondisi dipisahkan menjadi (status_line, filename), sehingga proses membaca file dan mengirim response cukup dilakukan satu kali di luar kondisi.
 
 Refactoring ini membuat kode lebih ringkas, mudah dibaca, dan lebih mudah dikembangkan di tahap selanjutnya.
+
+# Reflection 4: Single Thread dan Simulasi Slow Request
+
+Pada tahap ini, saya mempelajari keterbatasan server yang berjalan secara single thread dengan mensimulasikan request yang lambat.
+
+Simulasi Slow Request
+Saya menambahkan endpoint /sleep yang menggunakan thread::sleep(Duration::from_secs(10)) sebelum mengirim response. Hal ini mensimulasikan proses yang membutuhkan waktu lama.
+
+Dampak Single Thread
+Ketika saya membuka dua browser:
+Browser pertama mengakses /sleep
+Browser kedua mengakses /
+
+Saya mengamati bahwa request kedua ikut tertunda hingga request pertama selesai. Hal ini terjadi karena server hanya dapat memproses satu request dalam satu waktu.
+
+Insight yang Didapat
+Saya memahami bahwa server single thread bekerja secara sequential, sehingga satu request yang lambat dapat menghambat request lainnya. Hal ini tidak efisien dan tidak scalable jika digunakan oleh banyak user secara bersamaan.
