@@ -22,3 +22,16 @@ Saya menggunakan fs::read_to_string("hello.html") untuk membaca isi file HTML da
 Setelah format respon disusun menggunakan macro format!, data tersebut dikonversi menjadi bytes menggunakan method .as_bytes(). Kemudian, stream.write_all() digunakan untuk mengirimkan seluruh data tersebut melalui koneksi TCP kembali ke klien.
 
 ![Milestone 2](milestone_2.png)
+
+# Reflection 3: Validating Request dan Refactoring Response
+
+Pada tahap ini, saya memodifikasi fungsi handle_connection agar server dapat memvalidasi request dan memberikan respon yang berbeda sesuai path yang diminta.
+
+Validasi Request
+Saya mengambil baris pertama dari HTTP request menggunakan .lines().next() untuk mengetahui method dan path. Jika request adalah "GET / HTTP/1.1", server mengembalikan hello.html dengan status 200 OK. Jika tidak, server mengembalikan 404.html dengan status 404 NOT FOUND.
+Pemisahan Response
+Dengan adanya kondisi ini, server tidak lagi mengirim response yang sama untuk semua request. Hal ini membuat server lebih realistis karena dapat memberikan feedback yang sesuai ketika halaman tidak ditemukan.
+Refactoring Kode
+Saya melakukan refactoring untuk mengurangi duplikasi kode pada blok if-else. Perbedaan antara kedua kondisi dipisahkan menjadi (status_line, filename), sehingga proses membaca file dan mengirim response cukup dilakukan satu kali di luar kondisi.
+
+Refactoring ini membuat kode lebih ringkas, mudah dibaca, dan lebih mudah dikembangkan di tahap selanjutnya.
