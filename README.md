@@ -52,3 +52,12 @@ Saya mengamati bahwa request kedua ikut tertunda hingga request pertama selesai.
 
 Insight yang Didapat
 Saya memahami bahwa server single thread bekerja secara sequential, sehingga satu request yang lambat dapat menghambat request lainnya. Hal ini tidak efisien dan tidak scalable jika digunakan oleh banyak user secara bersamaan.
+
+# Reflection 5
+Pada tahap ini, saya mengembangkan server dari single thread menjadi multithread menggunakan ThreadPool untuk meningkatkan performa dalam menangani banyak request.
+
+Keterbatasan Thread per Request
+Awalnya saya mencoba menggunakan thread::spawn untuk setiap request. Pendekatan ini memungkinkan beberapa request diproses secara bersamaan, tetapi memiliki kelemahan karena jumlah thread tidak terbatas dan dapat membebani sistem jika request sangat banyak.
+
+Konsep ThreadPool
+ThreadPool adalah kumpulan thread dengan jumlah tetap yang siap digunakan untuk menjalankan task. Setiap request yang masuk akan dimasukkan ke dalam antrian, lalu diambil oleh thread yang tersedia untuk diproses.
