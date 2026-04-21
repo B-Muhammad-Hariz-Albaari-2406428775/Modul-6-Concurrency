@@ -61,3 +61,19 @@ Awalnya saya mencoba menggunakan thread::spawn untuk setiap request. Pendekatan 
 
 Konsep ThreadPool
 ThreadPool adalah kumpulan thread dengan jumlah tetap yang siap digunakan untuk menjalankan task. Setiap request yang masuk akan dimasukkan ke dalam antrian, lalu diambil oleh thread yang tersedia untuk diproses.
+
+# Reflection Bonus: Implementasi build sebagai Alternatif new
+
+Pada bagian ini, saya menambahkan fungsi build sebagai alternatif dari new untuk membuat ThreadPool dengan pendekatan error handling yang lebih aman.
+
+Perbedaan Pendekatan
+Fungsi new menggunakan assert! untuk memastikan jumlah thread lebih dari nol. Jika kondisi tidak terpenuhi, program akan langsung panic dan berhenti. Sebaliknya, fungsi build mengembalikan Result, sehingga error dapat ditangani tanpa menghentikan program secara paksa.
+
+Keunggulan build
+Dengan menggunakan build, pembuatan ThreadPool menjadi lebih fleksibel karena:
+Error dapat ditangani menggunakan match, unwrap, atau expect    
+Program tidak langsung crash
+Lebih cocok untuk aplikasi skala besar atau production
+
+Insight yang Didapat
+Saya memahami bahwa penggunaan Result lebih disarankan dibanding panic untuk kasus yang masih bisa ditangani. Hal ini membuat program lebih robust dan memberikan kontrol lebih terhadap alur error handling.
